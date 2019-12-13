@@ -1,11 +1,14 @@
 <div *ngIf="hero">
   <h2>{{hero.name | uppercase}} Details</h2>
-  <div><span>id: </span>{{hero.id}}</div>
-  <div>
+  <div class="details"><span >id: </span>{{hero.id}}</div>
+  <div class="details">
     <label>name:
-      <input [(ngModel)]="hero.name" placeholder="name"/>
+      <mat-form-field class="example-full-width">
+        <input matInput [(ngModel)]="hero.name" [placeholder]="hero.name" >
+      </mat-form-field>
     </label>
+   
   </div>
-  <button (click)="goBack()">go back</button>
-  <button (click)="save()">save</button>
+  <button mat-raised-button color="primary" (click)="goBack()">go back</button>
+  <button mat-raised-button color="primary" (click)="save()">save</button>
 </div>

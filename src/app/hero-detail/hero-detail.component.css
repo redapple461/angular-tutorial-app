@@ -4,6 +4,10 @@ label {
     margin: .5em 0;
     color: #607D8B;
     font-weight: bold;
+  
+  }
+  .details{
+    font-size: 25px;
   }
   input {
     height: 2em;
@@ -11,7 +15,8 @@ label {
     padding-left: .4em;
   }
   button {
-    margin-top: 20px;
+    margin : 15px;
+    margin-top: 5px;
     font-family: Arial;
     background-color: #eee;
     border: none;
