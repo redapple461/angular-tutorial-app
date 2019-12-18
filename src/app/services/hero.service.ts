@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Hero } from '../hero';
 import { HEROES } from '../mock-heroes';
 import { Observable, of } from 'rxjs';
@@ -13,8 +13,19 @@ export class HeroService {
 
   
   private heroesUrl = 'api/heroes';
+  share:EventEmitter<string> = new EventEmitter();
+  private universe = "";
 
   constructor(private messageService: MessageService,private http: HttpClient) { }
+
+  public getStudio(){
+    return this.universe;
+  }
+
+  public setStudio(universe: string){
+    this.universe = universe;
+  }
+
   // get all heroes from server
   getHeores(): Observable<Hero[]>{
     this.messageService.add('HeroService: fetched heroes');

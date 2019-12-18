@@ -16,6 +16,8 @@ import { HeroSearchComponent } from './hero-search/hero-search.component';
 import {MatInputModule} from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 import {MatButtonModule} from '@angular/material/button';
+import {MatRadioModule} from '@angular/material/radio';
+import { StudioPipe } from './services/studio.pipe';
 
 @NgModule({
   declarations: [
@@ -24,10 +26,12 @@ import {MatButtonModule} from '@angular/material/button';
     HeroDetailComponent,
     MessagesComponent,
     DashboardComponent,
-    HeroSearchComponent
+    HeroSearchComponent,
+    StudioPipe
  
   ],
   imports: [
+    MatRadioModule,
     MatButtonModule,
     BrowserAnimationsModule,
     MatInputModule,

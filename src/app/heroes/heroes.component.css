@@ -58,3 +58,13 @@ button.delete {
   left: 183px;
   top: -46px;
 }
+
+div{
+  border: solid 1px;
+  box-shadow: 0 0 3px 2px red;
+  width: 30%;
+  margin-bottom: 30px;
+}
+label{
+  margin-left: 19px;
+}

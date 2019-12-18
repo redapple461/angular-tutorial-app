@@ -13,12 +13,15 @@ import { HeroService }  from '../services/hero.service';
 export class HeroDetailComponent implements OnInit {
 
   hero: Hero;
-
+  selected = "";
   constructor(
     private route: ActivatedRoute,
     private heroService: HeroService,
     private location: Location
-  ) { }
+  ) {
+    this.heroService.share.subscribe(studio => this.selected = studio);
+    console.log(this.selected);
+   }
 
   ngOnInit() {
     this.getHero();
@@ -36,6 +39,7 @@ export class HeroDetailComponent implements OnInit {
   }
   //save new name of hero
   save(): void {
+    this.hero.universe = this.selected;
     this.heroService.updateHero(this.hero)
       .subscribe(() => this.goBack());
   }

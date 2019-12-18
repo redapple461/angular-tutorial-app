@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Hero} from '../hero'
-import {HEROES} from '../mock-heroes'
 import { HeroService } from '../services/hero.service';
+import { Input} from '@angular/core';
 
 @Component({
   selector: 'app-heroes',
@@ -11,9 +11,12 @@ import { HeroService } from '../services/hero.service';
 export class HeroesComponent implements OnInit {
   heroes: Hero[];
   selectedHero: Hero;
-
+  selected = "";
+  addStudio = "";
   constructor(private heroService: HeroService){
-
+    // this.heroService.share.subscribe(studio => this.selected = studio);
+    this.selected = this.heroService.getStudio();
+    console.log(this.selected);
   }
   // add hero
   add(name: string): void {
@@ -21,6 +24,7 @@ export class HeroesComponent implements OnInit {
     if (!name) { return; }
     this.heroService.addHero({ name } as Hero)
       .subscribe(hero => {
+        hero.universe = this.addStudio;
         this.heroes.push(hero);
       });
   }
