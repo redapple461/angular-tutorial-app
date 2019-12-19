@@ -14,7 +14,8 @@
   <button mat-raised-button (click)="add(heroName.value); heroName.value=''">
     add
   </button>
-  <span>Universe: </span>
+  <br>
+  <span class="check">Universe: </span>
   <mat-radio-group [(ngModel)]="addUniverse">
     <mat-radio-button class="example-margin" value="MARVEL">Marvel</mat-radio-button>
     <mat-radio-button class="example-margin" value="DC">DC</mat-radio-button>

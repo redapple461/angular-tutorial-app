@@ -1,18 +1,16 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Hero } from '../hero';
 import { HeroService } from '../services/hero.service';
-import { MatSliderModule } from '@angular/material/slider';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: [ './dashboard.component.css' ]
 })
-export class DashboardComponent implements OnInit,OnDestroy {
+export class DashboardComponent implements OnInit, OnDestroy {
 
-  
   heroes: Hero[] = [];
-  selected = "";
+  selected = '';
 
   constructor(private heroService: HeroService) { }
 
@@ -26,6 +24,6 @@ export class DashboardComponent implements OnInit,OnDestroy {
 
   getHeroes(): void {
     this.heroService.getHeores()
-      .subscribe(heroes => this.heroes = heroes.slice(1, 5));
+      .subscribe(heroes => this.heroes = heroes.slice(heroes.length - 4, heroes.length));
   }
 }

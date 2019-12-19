@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {Hero} from '../hero'
+import {Hero} from '../hero';
 import { HeroService } from '../services/hero.service';
-import { Input} from '@angular/core';
 
 @Component({
   selector: 'app-heroes',
@@ -11,9 +10,9 @@ import { Input} from '@angular/core';
 export class HeroesComponent implements OnInit {
   heroes: Hero[];
   selectedHero: Hero;
-  selected = "";
-  addStudio = "";
-  constructor(private heroService: HeroService){
+  selected = '';
+  addUniverse = '';
+  constructor(private heroService: HeroService) {
     // this.heroService.share.subscribe(studio => this.selected = studio);
     this.selected = this.heroService.getStudio();
     console.log(this.selected);
@@ -22,11 +21,11 @@ export class HeroesComponent implements OnInit {
   add(name: string): void {
     name = name.trim();
     if (!name) { return; }
-    this.heroService.addHero({ name } as Hero)
+    this.heroService.addHero({name, universe: this.addUniverse} as Hero)
       .subscribe(hero => {
-        hero.universe = this.addStudio;
         this.heroes.push(hero);
       });
+    this.getHeroes();
   }
   // delete hero
   delete(hero: Hero): void {
@@ -37,15 +36,13 @@ export class HeroesComponent implements OnInit {
   ngOnInit() {
     this.getHeroes();
   }
-  //gero all heroes
-  getHeroes(){
+  // gero all heroes
+  getHeroes() {
     this.heroService.getHeores().subscribe(heroes => this.heroes = heroes);
   }
   // set selectedHero
-  onSelect(hero: Hero){
+  onSelect(hero: Hero) {
     this.selectedHero = hero;
   }
-  
- 
 
 }

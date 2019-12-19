@@ -1,5 +1,5 @@
-export class Hero{
-    id: number;
+export class Hero {
+    id?: number;
     name: string;
-    studio: string;
+    universe: string;
 }
