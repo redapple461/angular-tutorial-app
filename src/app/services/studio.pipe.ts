@@ -6,10 +6,10 @@ import { Hero } from '../hero';
 })
 export class StudioPipe implements PipeTransform {
   transform(heroes: Hero[], search: string= ''): Hero[] {
-    if(!search.trim()){
+    if (!search.trim()) {
       return heroes;
     }
-    return heroes.filter(hero =>{
+    return heroes.filter(hero => {
       return hero.universe.toLowerCase().indexOf(search.toLowerCase()) !== -1;
     });
   }
