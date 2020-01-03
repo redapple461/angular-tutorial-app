@@ -23,7 +23,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   getHeroes(): void {
-    this.heroService.getHeores()
-      .subscribe(heroes => this.heroes = heroes.slice(heroes.length - 4, heroes.length));
+    this.heroService.getHeroes()
+      .subscribe(heroes => {
+        if (heroes.length <= 4) {
+          this.heroes = heroes.reverse();
+        } else {
+        this.heroes = heroes.slice(heroes.length - 4, heroes.length).reverse();
+        }
+      });
   }
 }

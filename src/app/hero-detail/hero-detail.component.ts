@@ -12,7 +12,7 @@ import { HeroService } from '../services/hero.service';
 })
 export class HeroDetailComponent implements OnInit {
 
-  hero: Hero;
+  hero: Hero = {name: '', universe: '' };
   selected = '';
   constructor(
     private route: ActivatedRoute,
@@ -29,8 +29,11 @@ export class HeroDetailComponent implements OnInit {
 
   // return hero by id
   getHero() {
-    const id = +this.route.snapshot.paramMap.get('id');
-    this.heroService.getHero(id).subscribe(hero => this.hero = hero);
+    const id = this.route.snapshot.paramMap.get('name');
+    this.heroService.getHero(id).subscribe(hero => {
+       this.hero.name = hero[0].name;
+       this.hero.universe = hero[0].universe;
+    });
   }
   // move on privious page
   goBack() {
