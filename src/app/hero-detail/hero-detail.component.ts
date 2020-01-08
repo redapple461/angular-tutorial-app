@@ -25,6 +25,7 @@ export class HeroDetailComponent implements OnInit {
 
   ngOnInit() {
     this.getHero();
+    this.selected = hero.universe;
   }
 
   // return hero by id
