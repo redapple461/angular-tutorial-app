@@ -25,7 +25,7 @@
 <ul class="heroes">
   <li *ngFor="let hero of heroes | universeSort:selected">
     <a class="test"routerLink="/detail/?name={{hero.name}}">
-      <span class="badge">{{hero.id}}</span> {{hero.name}}
+      <span class="badge">{{i}}</span> {{hero.name}}
     </a>
     <button mat-mini-fab color="warn" class="delete" title="delete hero"
       (click)="delete(hero)">x</button>

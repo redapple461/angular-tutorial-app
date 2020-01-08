@@ -35,6 +35,9 @@ export class HeroesComponent implements OnInit {
 
   ngOnInit() {
     this.getHeroes();
+    for(let i = 0; i<this.heroes.length ; i++){
+      this.heroes[i].id = i+1;
+    }
   }
   // gero all heroes
   getHeroes() {

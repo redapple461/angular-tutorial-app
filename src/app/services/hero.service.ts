@@ -40,11 +40,11 @@ export class HeroService {
   }
   // get hero by id from server
   getHero(name: string): Observable<Hero> {
-    this.messageService.add(`HeroService: fetched hero id=${name}`);
+    this.messageService.add(`HeroService: fetched hero name=${name}`);
     const url = `${this.heroesUrl}getHero/${name}`;
     return this.http.get<Hero>(url).pipe(
        tap(() => this.log(`fetched hero id=${name}`)),
-         catchError(this.handleError<Hero>(`getHero id=${name}`))
+         catchError(this.handleError<Hero>(`getHero name=${name}`))
      );
   }
   // add hero ( http - post)
