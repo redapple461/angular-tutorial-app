@@ -12,16 +12,13 @@ import { HeroService } from '../services/hero.service';
 })
 export class HeroDetailComponent implements OnInit {
 
-  hero: Hero = {name: '', universe: '' };
-  selected = '';
+  hero: Hero;
+  oldName: string;
   constructor(
     private route: ActivatedRoute,
     private heroService: HeroService,
     private location: Location
-  ) {
-    this.heroService.share.subscribe((studio: string) => this.selected = studio);
-    console.log(this.selected);
-   }
+  ) {  }
 
   ngOnInit() {
     this.getHero();
@@ -29,10 +26,10 @@ export class HeroDetailComponent implements OnInit {
 
   // return hero by id
   getHero() {
-    const id = this.route.snapshot.paramMap.get('name');
-    this.heroService.getHero(id).subscribe(hero => {
-       this.hero.name = hero[0].name;
-       this.hero.universe = hero[0].universe;
+    this.oldName = this.route.snapshot.paramMap.get('name');
+    this.heroService.getHero(this.oldName).subscribe(hero => {
+      this.hero = hero[0];
+      console.log(hero[0].universe);
     });
   }
   // move on privious page
@@ -41,8 +38,7 @@ export class HeroDetailComponent implements OnInit {
   }
   // save new name of hero
   save(): void {
-    this.hero.universe = this.selected;
-    this.heroService.updateHero(this.hero)
+    this.heroService.updateHero(this.hero, this.oldName)
       .subscribe(() => this.goBack());
   }
 
