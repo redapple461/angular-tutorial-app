@@ -27,6 +27,7 @@ export class HeroDetailComponent implements OnInit {
   // return hero by name
   getHero() {
     this.oldName = this.route.snapshot.paramMap.get('name');
+    console.log(this.oldName);
     this.heroService.getHero(this.oldName).subscribe(hero => {
       this.hero = hero[0];
       console.log(hero[0].universe);

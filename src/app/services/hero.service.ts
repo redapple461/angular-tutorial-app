@@ -69,7 +69,8 @@ export class HeroService {
   // update hero (http - put)
   updateHero(hero: Hero, oldName: string): Observable<any> {
     return this.http.put(`${this.heroesUrl}updateHero/${oldName}`, hero, this.httpOptions).pipe(
-      tap(() => this.log(`updated hero id=${hero.id}`))
+      tap(() => this.log(`updated hero id=${hero.id}`)),
+      catchError(this.handleError<Hero>('updateHero'))
     );
   }
   // seach heroes by name

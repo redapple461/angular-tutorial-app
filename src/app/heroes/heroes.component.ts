@@ -34,16 +34,11 @@ export class HeroesComponent implements OnInit {
 
   ngOnInit() {
     this.getHeroes();
-    for(let i = 0; i<this.heroes.length ; i++){
-      this.heroes[i].id = i+1;
-    }
   }
   // gero all heroes
   getHeroes() {
     this.heroService.getHeroes().subscribe(heroes => {
-        for (let i = 0 ; i < heroes.length ; i++) {
-          heroes[i].id = i + 1;
-        }
+        console.log(heroes);
         this.heroes = heroes;
       });
   }
