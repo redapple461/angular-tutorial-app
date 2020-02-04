@@ -25,12 +25,14 @@ export class HeroDetailComponent implements OnInit {
   }
 
   // return hero by name
-  getHero() {
-    this.oldName = this.route.snapshot.paramMap.get('name');
+  getHero(): void {
+    this.oldName = this.route.snapshot.paramMap.get('name') || 'Ironman';
     console.log(this.oldName);
     this.heroService.getHero(this.oldName).subscribe(hero => {
-      this.hero = hero[0];
-      console.log(hero[0].universe);
+      try{
+        this.hero = hero[0];
+        console.log(hero[0].universe);
+      } catch (e) { }
     });
   }
   // move on privious page

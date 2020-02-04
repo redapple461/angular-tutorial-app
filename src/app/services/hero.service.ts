@@ -10,7 +10,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 })
 export class HeroService {
 
-  private heroesUrl = 'http://localhost:3000/';
+  private heroesUrl = 'http://localhost:4000/';
   share: EventEmitter<string> = new EventEmitter();
   private universe = '';
 
@@ -59,7 +59,6 @@ export class HeroService {
   deleteHero(hero: Hero | string): Observable<Hero> {
     const name = typeof hero === 'string' ? hero : hero.name;
     const url = `${this.heroesUrl}deleteHero/${name}`;
-
     return this.http.delete<Hero>(url, this.httpOptions).pipe(
       tap(() => this.log(`deleted hero id=${name}`)),
       catchError(this.handleError<Hero>('deleteHero'))
@@ -73,6 +72,11 @@ export class HeroService {
       catchError(this.handleError<Hero>('updateHero'))
     );
   }
+
+  getTotalCount(): Observable<any>{
+    return this.http.get(`${this.heroesUrl}getTotalCount`);
+  }
+
   // seach heroes by name
   searchHeroes(term: string): Observable<Hero[]> {
     // check that search term is not empty

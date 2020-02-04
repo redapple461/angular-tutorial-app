@@ -22,7 +22,10 @@ export class HeroesComponent implements OnInit {
     if (!name) { return; }
     this.heroService.addHero({name, universe: this.addUniverse} as Hero)
       .subscribe(hero => {
-        this.heroes.push(hero);
+        try{
+         this.heroes.push(hero);
+        } catch(e) {
+        }
       });
     this.getHeroes();
   }
@@ -38,7 +41,7 @@ export class HeroesComponent implements OnInit {
   // gero all heroes
   getHeroes() {
     this.heroService.getHeroes().subscribe(heroes => {
-        console.log(heroes);
+        // console.log(heroes);
         this.heroes = heroes;
       });
   }

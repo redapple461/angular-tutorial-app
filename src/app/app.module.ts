@@ -31,8 +31,8 @@ import { StudioPipe } from './services/studio.pipe';
   imports: [
     MatRadioModule,
     MatButtonModule,
-    BrowserAnimationsModule,
     MatInputModule,
+    BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,

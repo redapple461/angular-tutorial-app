@@ -5,7 +5,7 @@ import { Hero } from '../hero';
   name: 'universeSort'
 })
 export class StudioPipe implements PipeTransform {
-  transform(heroes: Hero[], search: string= ''): Hero[] {
+  transform(heroes: Hero[] = [], search: string= ''): Hero[] {
     if (!search.trim()) {
       return heroes;
     }
