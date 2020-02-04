@@ -13,25 +13,28 @@ import { HeroService } from '../services/hero.service';
 export class HeroDetailComponent implements OnInit {
 
   hero: Hero;
-  selected = '';
+  oldName: string;
   constructor(
     private route: ActivatedRoute,
     private heroService: HeroService,
     private location: Location
-  ) {
-    this.heroService.share.subscribe((studio: string) => this.selected = studio);
-    console.log(this.selected);
-   }
+  ) {  }
 
   ngOnInit() {
     this.getHero();
     this.selected = hero.universe;
   }
 
-  // return hero by id
-  getHero() {
-    const id = +this.route.snapshot.paramMap.get('id');
-    this.heroService.getHero(id).subscribe(hero => this.hero = hero);
+  // return hero by name
+  getHero(): void {
+    this.oldName = this.route.snapshot.paramMap.get('name') || 'Ironman';
+    console.log(this.oldName);
+    this.heroService.getHero(this.oldName).subscribe(hero => {
+      try{
+        this.hero = hero[0];
+        console.log(hero[0].universe);
+      } catch (e) { }
+    });
   }
   // move on privious page
   goBack() {
@@ -39,8 +42,7 @@ export class HeroDetailComponent implements OnInit {
   }
   // save new name of hero
   save(): void {
-    this.hero.universe = this.selected;
-    this.heroService.updateHero(this.hero)
+    this.heroService.updateHero(this.hero, this.oldName)
       .subscribe(() => this.goBack());
   }
 

@@ -10,7 +10,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 })
 export class HeroService {
 
-  private heroesUrl = 'api/heroes';
+  private heroesUrl = 'http://localhost:4000/';
   share: EventEmitter<string> = new EventEmitter();
   private universe = '';
 
@@ -18,7 +18,9 @@ export class HeroService {
 
   // headers for http
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({
+       'Content-Type': 'application/json'
+      })
   };
   public getStudio() {
     return this.universe;
@@ -29,56 +31,59 @@ export class HeroService {
   }
 
   // get all heroes from server
-  getHeores(): Observable<Hero[]> {
+  getHeroes(): Observable<Hero[]> {
     this.messageService.add('HeroService: fetched heroes');
-    return this.http.get<Hero[]>(this.heroesUrl)
+    return this.http.get<Hero[]>(this.heroesUrl + 'getHeroes')
       .pipe(
-        catchError(this.handleError<Hero[]>('getHeroes',[]))
+        catchError(this.handleError<Hero[]>('getHeroes', []))
       );
   }
   // get hero by id from server
-  getHero(id: number): Observable<Hero> {
-    this.messageService.add(`HeroService: fetched hero id=${id}`);
-    const url = `${this.heroesUrl}/${id}`;
+  getHero(name: string): Observable<Hero> {
+    this.messageService.add(`HeroService: fetched hero name=${name}`);
+    const url = `${this.heroesUrl}getHero/${name}`;
     return this.http.get<Hero>(url).pipe(
-       tap(() => this.log(`fetched hero id=${id}`)),
-         catchError(this.handleError<Hero>(`getHero id=${id}`))
+       tap(() => this.log(`fetched hero id=${name}`)),
+         catchError(this.handleError<Hero>(`getHero name=${name}`))
      );
   }
   // add hero ( http - post)
   addHero(hero: Hero): Observable<Hero> {
-    console.log(hero.universe);
-    return this.http.post<Hero>(this.heroesUrl, hero, this.httpOptions).pipe(
+    return this.http.post<Hero>(this.heroesUrl + 'addHero', hero, this.httpOptions).pipe(
       tap((newHero: Hero) => this.log(`added hero w/ id=${newHero.id}`)),
       catchError(this.handleError<Hero>('addHero'))
     );
   }
 
   // delete hero (http - delete)
-  deleteHero(hero: Hero | number): Observable<Hero> {
-    const id = typeof hero === 'number' ? hero : hero.id;
-    const url = `${this.heroesUrl}/${id}`;
-
+  deleteHero(hero: Hero | string): Observable<Hero> {
+    const name = typeof hero === 'string' ? hero : hero.name;
+    const url = `${this.heroesUrl}deleteHero/${name}`;
     return this.http.delete<Hero>(url, this.httpOptions).pipe(
-      tap(() => this.log(`deleted hero id=${id}`)),
+      tap(() => this.log(`deleted hero id=${name}`)),
       catchError(this.handleError<Hero>('deleteHero'))
     );
   }
 
   // update hero (http - put)
-  updateHero(hero: Hero): Observable<any> {
-    return this.http.put(this.heroesUrl, hero, this.httpOptions).pipe(
+  updateHero(hero: Hero, oldName: string): Observable<any> {
+    return this.http.put(`${this.heroesUrl}updateHero/${oldName}`, hero, this.httpOptions).pipe(
       tap(() => this.log(`updated hero id=${hero.id}`)),
-      catchError(this.handleError<any>('updateHero'))
+      catchError(this.handleError<Hero>('updateHero'))
     );
   }
+
+  getTotalCount(): Observable<any>{
+    return this.http.get(`${this.heroesUrl}getTotalCount`);
+  }
+
   // seach heroes by name
   searchHeroes(term: string): Observable<Hero[]> {
     // check that search term is not empty
     if (!term.trim()) {
       return of([]);
     }
-    return this.http.get<Hero[]>(`${this.heroesUrl}/?name=${term}`).pipe(
+    return this.http.get<Hero[]>(`${this.heroesUrl}getHero/${term}`).pipe(
       tap(() => this.log(`found heroes matching "${term}"`)),
       catchError(this.handleError<Hero[]>('searchHeroes', []))
     );

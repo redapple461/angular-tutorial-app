@@ -25,6 +25,7 @@ export class HeroSearchComponent implements OnInit {
     this.searchTerms.next(term);
   }
 
+
   ngOnInit(): void {
     this.heroes$ = this.searchTerms.pipe(
       // 300ms delay before start searching

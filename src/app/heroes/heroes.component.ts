@@ -15,7 +15,6 @@ export class HeroesComponent implements OnInit {
   constructor(private heroService: HeroService) {
     // this.heroService.share.subscribe(studio => this.selected = studio);
     this.selected = this.heroService.getStudio();
-    console.log(this.selected);
   }
   // add hero
   add(name: string): void {
@@ -23,7 +22,10 @@ export class HeroesComponent implements OnInit {
     if (!name) { return; }
     this.heroService.addHero({name, universe: this.addUniverse} as Hero)
       .subscribe(hero => {
-        this.heroes.push(hero);
+        try{
+         this.heroes.push(hero);
+        } catch(e) {
+        }
       });
     this.getHeroes();
   }
@@ -38,7 +40,10 @@ export class HeroesComponent implements OnInit {
   }
   // gero all heroes
   getHeroes() {
-    this.heroService.getHeores().subscribe(heroes => this.heroes = heroes);
+    this.heroService.getHeroes().subscribe(heroes => {
+        // console.log(heroes);
+        this.heroes = heroes;
+      });
   }
   // set selectedHero
   onSelect(hero: Hero) {
