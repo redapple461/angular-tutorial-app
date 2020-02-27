@@ -85,6 +85,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
+            "codeCoverageExclude": ["src/app/hero-search/hero-search.component.ts"],
             "assets": [
               "src/favicon.ico",
               "src/assets"
@@ -95,6 +96,7 @@
             ],
             "scripts": []
           }
+          
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",

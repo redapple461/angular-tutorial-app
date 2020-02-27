@@ -1,14 +1,16 @@
 import { HeroService } from './hero.service';
 import { HttpClientModule } from '@angular/common/http';
 import { MessageService } from './message.service';
-import { Hero } from '../hero';
+import { Hero } from '../models/hero.model.';
 import { TestBed } from '@angular/core/testing';
 import { Observable, of } from 'rxjs';
+import { compileComponentFromMetadata } from '@angular/compiler';
 
 describe('Hero Service', () => {
     let heroService;
     let count: number;
     let mockHero: Hero;
+    let messageService: MessageService;
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
@@ -21,6 +23,7 @@ describe('Hero Service', () => {
           count = res.count;
         });
         mockHero = {name: 'Mock', universe: ''};
+        messageService = TestBed.get(MessageService);
      });
 
     it('should exist', () => {
@@ -86,6 +89,16 @@ describe('Hero Service', () => {
         done();
       });
     });
+
+    it('should handle error on wrong url', (done) => {
+      heroService.setUrl('http://localhost/4000/3');
+      heroService.getHeroes().subscribe(r => {
+        console.log(messageService.messages);
+        expect(messageService.messages[1]).toContain('failed');
+        done();
+      });
+    });
+
 
 });
 

@@ -19,7 +19,7 @@ module.exports = function (config) {
       }
     },
     test: {
-      codeCoverageExclude: ['./app.component.ts']
+      codeCoverageExclude: ['src/app/hero-search']
     },
     coverageIstanbulReporter: {
       dir: require('path').join(__dirname, './coverage/hero-tour'),

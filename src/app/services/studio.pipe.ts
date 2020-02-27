@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Hero } from '../hero';
+import { Hero } from '../models/hero.model.';
 
 @Pipe({
   name: 'universeSort'

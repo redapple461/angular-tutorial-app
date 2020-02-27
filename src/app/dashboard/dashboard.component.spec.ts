@@ -17,7 +17,7 @@ import { StudioPipe } from '../services/studio.pipe';
 import { HeroService } from '../services/hero.service';
 import { MessageService } from '../services/message.service';
 import { By } from '@angular/platform-browser';
-import { Hero } from '../hero';
+import { Hero } from '../models/hero.model.';
 
 
 describe('DashBoard', () => {
@@ -25,6 +25,7 @@ describe('DashBoard', () => {
     let fixture: ComponentFixture<DashboardComponent>;
     let rootElement: HTMLElement;
     let heroService: HeroService;
+    let messageService: MessageService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -52,12 +53,20 @@ describe('DashBoard', () => {
         fixture = TestBed.createComponent(DashboardComponent);
         component = fixture.componentInstance;
         heroService = fixture.debugElement.injector.get(HeroService);
+        messageService = fixture.debugElement.injector.get(MessageService);
         rootElement = fixture.nativeElement;
     });
 
     it('should create dashboard' , () => {
         expect(component).toBeDefined();
     });
+
+    it('ngOnInit should call getHeroes', () => {
+        const spy: jasmine.Spy = spyOn(component, 'getHeroes');
+        component.ngOnInit();
+        expect(spy.calls.any()).toBeTruthy();
+    });
+
 
     it('should contain link to heroes', () => {
         expect(rootElement.querySelector('a').textContent).toEqual('Heroes');
@@ -80,6 +89,9 @@ describe('DashBoard', () => {
         component.getHeroes();
         expect(spyOn(heroService, 'getHeroes').and.callThrough()).toBeTruthy();
     });
+
+
+
 
 
 });

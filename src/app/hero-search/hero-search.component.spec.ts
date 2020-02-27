@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HeroesComponent } from '../heroes/heroes.component';
-import { Hero } from '../hero';
+import { Hero } from '../models/hero.model.';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
@@ -82,6 +82,14 @@ describe('Heroes Search Component', () => {
         expect(component.heroes$).toBeDefined();
         done();
     });
+
+    it('shoud ...', (done) => {
+        component.ngOnInit();
+        component.search('Iron');
+        fixture.detectChanges();
+        component.search('Ironman');
+        done();
+    })
 
 
 });

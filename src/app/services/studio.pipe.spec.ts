@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { StudioPipe } from './studio.pipe';
-import { Hero } from '../hero';
+import { Hero } from '../models/hero.model.';
 
 
 

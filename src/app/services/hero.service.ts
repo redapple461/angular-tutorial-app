@@ -1,5 +1,5 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { Hero } from '../hero';
+import { Hero } from '../models/hero.model.';
 import { Observable, of } from 'rxjs';
 import { MessageService} from '../services/message.service'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -9,19 +9,26 @@ import { catchError, map, tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class HeroService {
-
+  private token: string = localStorage.getItem('userData');;
   private heroesUrl = 'http://localhost:4000/';
   share: EventEmitter<string> = new EventEmitter();
   private universe = '';
 
-  constructor(private messageService: MessageService, private http: HttpClient) { }
+  constructor(private messageService: MessageService, private http: HttpClient) {}
+
 
   // headers for http
   httpOptions = {
     headers: new HttpHeaders({
-       'Content-Type': 'application/json'
+       'Content-Type': 'application/json',
+       authorization: this.token
       })
   };
+
+  public setUrl(url: string){
+    this.heroesUrl = url;
+  }
+
   public getStudio() {
     return this.universe;
   }
@@ -33,7 +40,7 @@ export class HeroService {
   // get all heroes from server
   getHeroes(): Observable<Hero[]> {
     this.messageService.add('HeroService: fetched heroes');
-    return this.http.get<Hero[]>(this.heroesUrl + 'getHeroes')
+    return this.http.get<Hero[]>(this.heroesUrl + 'getHeroes', this.httpOptions)
       .pipe(
         catchError(this.handleError<Hero[]>('getHeroes', []))
       );
@@ -42,7 +49,7 @@ export class HeroService {
   getHero(name: string): Observable<Hero> {
     this.messageService.add(`HeroService: fetched hero name=${name}`);
     const url = `${this.heroesUrl}getHero/${name}`;
-    return this.http.get<Hero>(url).pipe(
+    return this.http.get<Hero>(url, this.httpOptions).pipe(
        tap(() => this.log(`fetched hero id=${name}`)),
          catchError(this.handleError<Hero>(`getHero name=${name}`))
      );
@@ -74,7 +81,7 @@ export class HeroService {
   }
 
   getTotalCount(): Observable<any>{
-    return this.http.get(`${this.heroesUrl}getTotalCount`);
+    return this.http.get(`${this.heroesUrl}getTotalCount`, this.httpOptions);
   }
 
   // seach heroes by name
@@ -83,7 +90,7 @@ export class HeroService {
     if (!term.trim()) {
       return of([]);
     }
-    return this.http.get<Hero[]>(`${this.heroesUrl}getHero/${term}`).pipe(
+    return this.http.get<Hero[]>(`${this.heroesUrl}getHero/${term}`, this.httpOptions).pipe(
       tap(() => this.log(`found heroes matching "${term}"`)),
       catchError(this.handleError<Hero[]>('searchHeroes', []))
     );
@@ -94,7 +101,7 @@ export class HeroService {
   }
 
   // method to handle errors
-  private handleError<T>(operation = 'operation', result?: T) {
+  public handleError<T>(operation: string, result?: T) {
     return (error: any): Observable<T> => {
       this.log(`${operation} failed: ${error.message}`);
       // app should still running so returning empty arr

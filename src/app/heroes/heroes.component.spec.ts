@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HeroesComponent } from './heroes.component';
-import { Hero } from '../hero';
+import { Hero } from '../models/hero.model.';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
@@ -102,6 +102,19 @@ describe('HeroesComponent', () => {
         component.heroes = [];
         component.delete({name: 'Test', universe: ''});
         expect(spy).toHaveBeenCalled();
+    });
+
+    it('should filter array on delete', () => {
+        component.heroes = [{id: 0, name: 'Test', universe: 'Testtt'} , { id: 0, name: 'Test1', universe: 'Testtt'}];
+        component.delete({id: 0, name: 'Test', universe: 'Testtt'});
+        expect(component.heroes.length).toBe(1);
+    });
+
+    it('should change selected hero', () => {
+        const mockHero = {id: 1, name: 'Mock', universe: 'Mock_U'};
+        component.selectedHero = {id: 0, name: 'Test', universe: 'Testtt'};
+        component.onSelect(mockHero);
+        expect(component.selectedHero).toEqual(mockHero);
     });
 
 });

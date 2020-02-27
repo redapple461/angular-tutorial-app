@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Hero } from '../hero';
+import { Hero } from '../models/hero.model.';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -29,9 +29,8 @@ export class HeroDetailComponent implements OnInit {
     this.oldName = this.route.snapshot.paramMap.get('name') || 'Ironman';
     console.log(this.oldName);
     this.heroService.getHero(this.oldName).subscribe(hero => {
-      try{
-        this.hero = hero[0];
-        console.log(hero[0].universe);
+      try {
+        this.hero = hero;
       } catch (e) { }
     });
   }

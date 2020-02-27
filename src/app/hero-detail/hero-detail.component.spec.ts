@@ -17,7 +17,7 @@ import { StudioPipe } from '../services/studio.pipe';
 import { HeroService } from '../services/hero.service';
 import { MessageService } from '../services/message.service';
 import { By } from '@angular/platform-browser';
-import { Hero } from '../hero';
+import { Hero } from '../models/hero.model.';
 import { of, Observable } from 'rxjs';
 
 
@@ -57,7 +57,7 @@ describe('Hero Details Component', () => {
         // fixture.detectChanges();
     });
 
-    it('shoul created', () => {
+    it('should created', () => {
         expect(component).toBeDefined();
     });
 
@@ -74,12 +74,12 @@ describe('Hero Details Component', () => {
     });
 
 
-    it('shoulnt display div with hero detail if hero is empty', () => {
+    it('shouldnt display div with hero detail if hero is empty', () => {
         expect(fixture.debugElement.query(By.css('.details'))).toBeNull();
     });
 
 
-    it('shoulnt get hero by name', () => {
+    it('shouldnt get hero by name', () => {
         const spy: jasmine.Spy = spyOn(heroService, 'getHero').and.returnValue(of(component.hero));
         component.getHero();
         expect(spy).toHaveBeenCalled();

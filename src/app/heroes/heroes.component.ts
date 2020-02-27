@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Hero} from '../hero';
+import {Hero} from '../models/hero.model.';
 import { HeroService } from '../services/hero.service';
 
 @Component({
@@ -31,7 +31,9 @@ export class HeroesComponent implements OnInit {
   }
   // delete hero
   delete(hero: Hero): void {
-    this.heroes = this.heroes.filter(h => h !== hero);
+    console.log(hero);
+    this.heroes = this.heroes.filter(h => h.name !== hero.name);
+    console.log(this.heroes);
     this.heroService.deleteHero(hero).subscribe();
   }
 
