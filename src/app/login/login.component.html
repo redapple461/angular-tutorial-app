@@ -13,10 +13,10 @@
         </mat-form-field>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-raised-button (click)="signIn();">
+        <button mat-raised-button routerLink="/dashboard" (click)="signIn();">
           Sign in
         </button>
-        <button mat-raised-button (click)='regForm()'>
+        <button mat-raised-button routerLink="/register" (click)='regForm()'>
           Registration
         </button>
       </mat-card-actions>

@@ -19,6 +19,7 @@ import { StudioPipe } from './services/studio.pipe';
 import { LoginComponent } from './login/login.component';
 import {MatCardModule} from '@angular/material/card';
 import { RegistrationComponent } from './registration/registration.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { RegistrationComponent } from './registration/registration.component';
     HeroSearchComponent,
     StudioPipe,
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    ProfileComponent
   ],
   imports: [
     MatRadioModule,

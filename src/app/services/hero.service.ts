@@ -9,7 +9,7 @@ import { catchError, map, tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class HeroService {
-  private token: string = localStorage.getItem('userData');;
+  private token: string = JSON.parse(localStorage.getItem('userData')).token;
   private heroesUrl = 'http://localhost:4000/';
   share: EventEmitter<string> = new EventEmitter();
   private universe = '';

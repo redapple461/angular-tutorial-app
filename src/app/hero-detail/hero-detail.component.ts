@@ -14,6 +14,7 @@ export class HeroDetailComponent implements OnInit {
 
   hero: Hero;
   oldName: string;
+  selected: string;
   constructor(
     private route: ActivatedRoute,
     private heroService: HeroService,
@@ -22,7 +23,7 @@ export class HeroDetailComponent implements OnInit {
 
   ngOnInit() {
     this.getHero();
-    this.selected = hero.universe;
+    this.selected = this.hero.universe;
   }
 
   // return hero by name

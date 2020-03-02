@@ -1,5 +1,7 @@
 <body>
   <h1>{{title}}</h1>
+  <button mat-raised-button color="primary" routerLink="/" style="float: right" (click)='logout()'>Logout</button>
+  <button mat-raised-button color="primary" routerLink="/profile" style="margin-right: 15px;float: right">Profile</button>
   <router-outlet></router-outlet>
   <app-messages></app-messages>
 </body>

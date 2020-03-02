@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MessageService } from './services/message.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   // title = 'hero-tour';
+  constructor(private messageService: MessageService){}
+  logout() {
+    this.messageService.clear();
+    localStorage.removeItem('userData');
+  }
 }
