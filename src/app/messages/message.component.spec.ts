@@ -16,6 +16,12 @@ import { HeroSearchComponent } from '../hero-search/hero-search.component';
 import { StudioPipe } from '../services/studio.pipe';
 import { HeroService } from '../services/hero.service';
 import { MessageService } from '../services/message.service';
+import {MatCardModule} from '@angular/material/card';
+import { SendEmailComponent } from '../send-email/send-email.component';
+import { LoginComponent } from '../login/login.component';
+import { ChangePasswordComponent } from '../change-password/change-password.component';
+import { RegistrationComponent } from '../registration/registration.component';
+import { ProfileComponent } from '../profile/profile.component';
 
 
 describe('Message component', () => {
@@ -23,25 +29,33 @@ describe('Message component', () => {
     let fixture: ComponentFixture<MessagesComponent>;
     let divElement: HTMLElement;
     beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [    MatRadioModule,
-                MatButtonModule,
-                MatInputModule,
-                BrowserAnimationsModule,
-                BrowserModule,
-                AppRoutingModule,
-                FormsModule,
-                HttpClientModule],
-            declarations: [  AppComponent,
-                HeroesComponent,
-                HeroDetailComponent,
-                MessagesComponent,
-                DashboardComponent,
-                HeroSearchComponent,
-                StudioPipe],
-            providers: [ HeroService, MessageService ]
-        })
-        .compileComponents();
+      TestBed.configureTestingModule({
+        imports: [    MatRadioModule,
+            MatButtonModule,
+            MatInputModule,
+            BrowserAnimationsModule,
+            BrowserModule,
+            AppRoutingModule,
+            MatCardModule,
+            FormsModule,
+            HttpClientModule],
+        declarations: [
+            AppComponent,
+            HeroesComponent,
+            HeroDetailComponent,
+            MessagesComponent,
+            DashboardComponent,
+            HeroSearchComponent,
+            StudioPipe,
+            SendEmailComponent,
+            LoginComponent,
+            ChangePasswordComponent,
+            RegistrationComponent,
+            ProfileComponent
+          ],
+        providers: [ HeroService, MessageService ]
+    })
+    .compileComponents();
     }));
 
     beforeEach(() => {

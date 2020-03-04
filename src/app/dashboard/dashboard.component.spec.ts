@@ -18,6 +18,12 @@ import { HeroService } from '../services/hero.service';
 import { MessageService } from '../services/message.service';
 import { By } from '@angular/platform-browser';
 import { Hero } from '../models/hero.model.';
+import {MatCardModule} from '@angular/material/card';
+import { SendEmailComponent } from '../send-email/send-email.component';
+import { LoginComponent } from '../login/login.component';
+import { ChangePasswordComponent } from '../change-password/change-password.component';
+import { RegistrationComponent } from '../registration/registration.component';
+import { ProfileComponent } from '../profile/profile.component';
 
 
 describe('DashBoard', () => {
@@ -28,6 +34,13 @@ describe('DashBoard', () => {
     let messageService: MessageService;
 
     beforeEach(() => {
+        localStorage.setItem('userData',
+          JSON.stringify(
+            {
+              token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZTVlNWEwYjA2NzVmZDQ3YjA4NDNlNWMiLCJpYXQiOjE1ODMzMTcxMzl9.USRfyGBxF61mq7yiG5u7UxiIrYsGJbSc9bHgp8iQWrQ',
+              userId: '5e5e5a0b0675fd47b0843e5c'
+            }
+        ));
         TestBed.configureTestingModule({
             imports: [    MatRadioModule,
                 MatButtonModule,
@@ -35,15 +48,23 @@ describe('DashBoard', () => {
                 BrowserAnimationsModule,
                 BrowserModule,
                 AppRoutingModule,
+                MatCardModule,
                 FormsModule,
                 HttpClientModule],
-            declarations: [  AppComponent,
+            declarations: [
+                AppComponent,
                 HeroesComponent,
                 HeroDetailComponent,
                 MessagesComponent,
                 DashboardComponent,
                 HeroSearchComponent,
-                StudioPipe],
+                StudioPipe,
+                SendEmailComponent,
+                LoginComponent,
+                ChangePasswordComponent,
+                RegistrationComponent,
+                ProfileComponent
+              ],
             providers: [ HeroService, MessageService ]
         })
         .compileComponents();

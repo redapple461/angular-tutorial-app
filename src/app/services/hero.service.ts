@@ -25,7 +25,7 @@ export class HeroService {
       })
   };
 
-  public setUrl(url: string){
+  public setUrl(url: string) {
     this.heroesUrl = url;
   }
 
@@ -56,6 +56,7 @@ export class HeroService {
   }
   // add hero ( http - post)
   addHero(hero: Hero): Observable<Hero> {
+    console.log('add hero ' + hero.name);
     return this.http.post<Hero>(this.heroesUrl + 'addHero', hero, this.httpOptions).pipe(
       tap((newHero: Hero) => this.log(`added hero w/ id=${newHero.id}`)),
       catchError(this.handleError<Hero>('addHero'))
@@ -80,7 +81,7 @@ export class HeroService {
     );
   }
 
-  getTotalCount(): Observable<any>{
+  getTotalCount(): Observable<any> {
     return this.http.get(`${this.heroesUrl}getTotalCount`, this.httpOptions);
   }
 

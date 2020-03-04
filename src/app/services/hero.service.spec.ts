@@ -8,9 +8,11 @@ import { compileComponentFromMetadata } from '@angular/compiler';
 
 describe('Hero Service', () => {
     let heroService;
-    let count: number;
     let mockHero: Hero;
     let messageService: MessageService;
+    localStorage.setItem('userData',JSON.stringify({
+      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZTVlNWEwYjA2NzVmZDQ3YjA4NDNlNWMiLCJpYXQiOjE1ODMzMTcxMzl9.USRfyGBxF61mq7yiG5u7UxiIrYsGJbSc9bHgp8iQWrQ'
+    }));
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
@@ -19,10 +21,10 @@ describe('Hero Service', () => {
             providers: [HeroService, MessageService]
           });
         heroService = TestBed.get(HeroService);
-        heroService.getTotalCount().subscribe(res => {
+        /*heroService.getTotalCount().subscribe(res => {
           count = res.count;
-        });
-        mockHero = {name: 'Mock', universe: ''};
+        });*/
+        mockHero = {name: 'Mock', universe: 'Marvel'};
         messageService = TestBed.get(MessageService);
      });
 
@@ -31,15 +33,10 @@ describe('Hero Service', () => {
     });
 
 
-    it('shoud return all heroes by call getHeroes', (done) => {
-      heroService.getHeroes().subscribe(res => {
-        expect(res.length).toEqual(count);
-        done();
-      });
-    });
 
     it('shoud add mock hero ', (done) => {
       heroService.addHero(mockHero).subscribe(res => {
+        console.log('asdasd '+res);
         expect(res.name).toEqual(mockHero.name);
         done();
       });
@@ -54,8 +51,8 @@ describe('Hero Service', () => {
 
     it('shoud update previous mock hero ', (done) => {
       mockHero.name = 'updateMock';
-      heroService.updateHero(mockHero,'Mock').subscribe(res => {
-        expect(res.msg).toEqual('hero was updated!');
+      heroService.updateHero(mockHero, 'Mock').subscribe(res => {
+        expect(res.message).toEqual('Hero Mock was updated!');
         done();
       });
     });
@@ -68,19 +65,7 @@ describe('Hero Service', () => {
       });
     });
 
-    it('should return empty array', (done) => {
-      heroService.searchHeroes('').subscribe(res => {
-        expect(res.length).toEqual(0);
-        done();
-      });
-    });
 
-    it('should return emptry result', (done) => {
-      heroService.getHero('te123st').subscribe(res => {
-         expect(res.length).toEqual(0);
-         done();
-        });
-    });
 
     it('should return empty hero, but take name from hero name', (done) => {
       mockHero.name = 'updateMock';

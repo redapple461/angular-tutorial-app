@@ -23,7 +23,7 @@ export class HeroDetailComponent implements OnInit {
 
   ngOnInit() {
     this.getHero();
-    this.selected = this.hero.universe;
+    
   }
 
   // return hero by name
@@ -33,6 +33,7 @@ export class HeroDetailComponent implements OnInit {
     this.heroService.getHero(this.oldName).subscribe(hero => {
       try {
         this.hero = hero;
+        this.selected = this.hero.universe || '';
       } catch (e) { }
     });
   }

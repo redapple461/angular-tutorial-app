@@ -19,9 +19,14 @@ import {MatRadioModule} from '@angular/material/radio';
 import { StudioPipe } from '../services/studio.pipe';
 import { HeroService } from '../services/hero.service';
 import { MessageService } from '../services/message.service';
-import { DebugElement } from '@angular/core';
+import {MatCardModule} from '@angular/material/card';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
+import { SendEmailComponent } from '../send-email/send-email.component';
+import { LoginComponent } from '../login/login.component';
+import { ChangePasswordComponent } from '../change-password/change-password.component';
+import { RegistrationComponent } from '../registration/registration.component';
+import { ProfileComponent } from '../profile/profile.component';
 
 describe('HeroesComponent', () => {
     let component: HeroesComponent;
@@ -31,25 +36,34 @@ describe('HeroesComponent', () => {
     let rootElement: HTMLElement;
 
     beforeEach(async(() => {
+        localStorage.setItem('userData',JSON.stringify('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZTVlNWEwYjA2NzVmZDQ3YjA4NDNlNWMiLCJpYXQiOjE1ODMzMTcxMzl9.USRfyGBxF61mq7yiG5u7UxiIrYsGJbSc9bHgp8iQWrQ'));
         TestBed.configureTestingModule({
-            imports: [    MatRadioModule,
-                MatButtonModule,
-                MatInputModule,
-                BrowserAnimationsModule,
-                BrowserModule,
-                AppRoutingModule,
-                FormsModule,
-                HttpClientModule],
-            declarations: [  AppComponent,
-                HeroesComponent,
-                HeroDetailComponent,
-                MessagesComponent,
-                DashboardComponent,
-                HeroSearchComponent,
-                StudioPipe],
-            providers: [ HeroService, MessageService ]
-        })
-        .compileComponents();
+          imports: [    MatRadioModule,
+              MatButtonModule,
+              MatInputModule,
+              BrowserAnimationsModule,
+              BrowserModule,
+              AppRoutingModule,
+              MatCardModule,
+              FormsModule,
+              HttpClientModule],
+          declarations: [
+              AppComponent,
+              HeroesComponent,
+              HeroDetailComponent,
+              MessagesComponent,
+              DashboardComponent,
+              HeroSearchComponent,
+              StudioPipe,
+              SendEmailComponent,
+              LoginComponent,
+              ChangePasswordComponent,
+              RegistrationComponent,
+              ProfileComponent
+            ],
+          providers: [ HeroService, MessageService ]
+      })
+      .compileComponents();
     }));
 
     beforeEach(() => {
@@ -77,7 +91,7 @@ describe('HeroesComponent', () => {
     it('should contain checkbox for universe choose', () => {
         const marvel = fixture.debugElement.queryAll(By.css('.example-margin'))[0];
         const dc = fixture.debugElement.queryAll(By.css('.example-margin'))[1];
-        expect(marvel.attributes.value).toEqual('MARVEL');
+        expect(marvel.attributes.value).toEqual('Marvel');
         expect(dc.attributes.value).toEqual('DC');
     });
 
@@ -100,19 +114,19 @@ describe('HeroesComponent', () => {
     it('should call hero service on delete', () => {
         const spy: jasmine.Spy = spyOn(heroService, 'deleteHero').and.returnValue(of(component.selectedHero));
         component.heroes = [];
-        component.delete({name: 'Test', universe: ''});
+        component.delete({name: 'Test', universe: 'Marvel'});
         expect(spy).toHaveBeenCalled();
     });
 
     it('should filter array on delete', () => {
-        component.heroes = [{id: 0, name: 'Test', universe: 'Testtt'} , { id: 0, name: 'Test1', universe: 'Testtt'}];
-        component.delete({id: 0, name: 'Test', universe: 'Testtt'});
+        component.heroes = [{id: 0, name: 'Test', universe: 'Marvel'} , { id: 0, name: 'Test1', universe: 'Marvel'}];
+        component.delete({id: 0, name: 'Test', universe: 'Marvel'});
         expect(component.heroes.length).toBe(1);
     });
 
     it('should change selected hero', () => {
-        const mockHero = {id: 1, name: 'Mock', universe: 'Mock_U'};
-        component.selectedHero = {id: 0, name: 'Test', universe: 'Testtt'};
+        const mockHero = {id: 1, name: 'Mock', universe: 'Marvel'};
+        component.selectedHero = {id: 0, name: 'Test', universe: 'Marvel'};
         component.onSelect(mockHero);
         expect(component.selectedHero).toEqual(mockHero);
     });

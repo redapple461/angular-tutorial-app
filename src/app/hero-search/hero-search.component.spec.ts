@@ -19,8 +19,13 @@ import {MatRadioModule} from '@angular/material/radio';
 import { StudioPipe } from '../services/studio.pipe';
 import { HeroService } from '../services/hero.service';
 import { MessageService } from '../services/message.service';
-import { DebugElement } from '@angular/core';
+import {MatCardModule} from '@angular/material/card';
 import { By } from '@angular/platform-browser';
+import { SendEmailComponent } from '../send-email/send-email.component';
+import { LoginComponent } from '../login/login.component';
+import { ChangePasswordComponent } from '../change-password/change-password.component';
+import { RegistrationComponent } from '../registration/registration.component';
+import { ProfileComponent } from '../profile/profile.component';
 
 describe('Heroes Search Component', () => {
     let component: HeroSearchComponent;
@@ -31,25 +36,34 @@ describe('Heroes Search Component', () => {
     let rootElement: HTMLElement;
 
     beforeEach(async(() => {
+        localStorage.setItem('userData',JSON.stringify('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZTVlNWEwYjA2NzVmZDQ3YjA4NDNlNWMiLCJpYXQiOjE1ODMzMTcxMzl9.USRfyGBxF61mq7yiG5u7UxiIrYsGJbSc9bHgp8iQWrQ'));
         TestBed.configureTestingModule({
-            imports: [    MatRadioModule,
-                MatButtonModule,
-                MatInputModule,
-                BrowserAnimationsModule,
-                BrowserModule,
-                AppRoutingModule,
-                FormsModule,
-                HttpClientModule],
-            declarations: [  AppComponent,
-                HeroesComponent,
-                HeroDetailComponent,
-                MessagesComponent,
-                DashboardComponent,
-                HeroSearchComponent,
-                StudioPipe],
-            providers: [ HeroService, MessageService ]
-        })
-        .compileComponents();
+          imports: [    MatRadioModule,
+              MatButtonModule,
+              MatInputModule,
+              BrowserAnimationsModule,
+              BrowserModule,
+              AppRoutingModule,
+              MatCardModule,
+              FormsModule,
+              HttpClientModule],
+          declarations: [
+              AppComponent,
+              HeroesComponent,
+              HeroDetailComponent,
+              MessagesComponent,
+              DashboardComponent,
+              HeroSearchComponent,
+              StudioPipe,
+              SendEmailComponent,
+              LoginComponent,
+              ChangePasswordComponent,
+              RegistrationComponent,
+              ProfileComponent
+            ],
+          providers: [ HeroService, MessageService ]
+      })
+      .compileComponents();
     }));
 
     beforeEach(() => {

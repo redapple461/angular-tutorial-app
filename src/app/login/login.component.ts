@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit {
 
   signIn() {
     this.authService.signIn(this.email, this.password).subscribe((res: any) => {
+      console.log(res);
       localStorage.setItem('userData', JSON.stringify(res));
       this.location.go('/dashboard');
     });
