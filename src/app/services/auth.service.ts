@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { ResponseInterface } from '../models/response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +13,7 @@ export class AuthService {
   public isAuthenticated(): boolean {
     const jwtHelper: JwtHelperService = new JwtHelperService();
     const token = JSON.parse(localStorage.getItem('userData')).token;
+    const httpOptions = 
     console.log(token);
     // Check whether the token is expired and return
     // true or false
@@ -23,5 +26,18 @@ export class AuthService {
 
   public register(email: string, password: string, name: string, surname: string, phone: string) {
     return this.http.post('http://localhost:4000/auth/register', {email, password, name, surname, phone});
+  }
+
+  public sendEmail(email: string): Observable<ResponseInterface> {
+    return this.http.post<ResponseInterface>('http://localhost:4000/auth/forgot', {email});
+  }
+
+  public changePassword(password: string, token: string): Observable<ResponseInterface> {
+    return this.http.post<ResponseInterface>('http://localhost:4000/auth/resetPassword', {password}, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        authorization: token
+       })
+    });
   }
 }

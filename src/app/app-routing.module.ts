@@ -9,6 +9,8 @@ import {
 import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { ProfileComponent } from './profile/profile.component';
+import { SendEmailComponent } from './send-email/send-email.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 const routes: Routes = [
   { path: 'heroes', component: HeroesComponent, canActivate: [AuthGuard]},
@@ -16,7 +18,9 @@ const routes: Routes = [
   { path: 'detail/:name', component: HeroDetailComponent, canActivate: [AuthGuard]},
   { path: '', component: LoginComponent, pathMatch: 'full'},
   { path: 'register', component: RegistrationComponent},
-  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]}
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
+  { path: 'forgotPassword', component: SendEmailComponent},
+  { path: 'resetPassword/:token', component: ChangePasswordComponent}
 ];
 
 @NgModule({

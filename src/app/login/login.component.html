@@ -11,6 +11,9 @@
           <mat-label> Password </mat-label>
           <input matInput placeholder="Password" type='password' [(ngModel)]="password">
         </mat-form-field>
+        <div>
+          <a style="font-size: 13px;"routerLink="/forgotPassword">Forgot password?</a>
+        </div>
       </mat-card-content>
       <mat-card-actions>
         <button mat-raised-button routerLink="/dashboard" (click)="signIn();">

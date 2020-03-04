@@ -20,6 +20,8 @@ import { LoginComponent } from './login/login.component';
 import {MatCardModule} from '@angular/material/card';
 import { RegistrationComponent } from './registration/registration.component';
 import { ProfileComponent } from './profile/profile.component';
+import { SendEmailComponent } from './send-email/send-email.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { ProfileComponent } from './profile/profile.component';
     StudioPipe,
     LoginComponent,
     RegistrationComponent,
-    ProfileComponent
+    ProfileComponent,
+    SendEmailComponent,
+    ChangePasswordComponent
   ],
   imports: [
     MatRadioModule,

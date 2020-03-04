@@ -22,7 +22,7 @@ export class ProfileComponent implements OnInit {
   public save() {
     this.userService.updateUser(this.user._id, this.user).subscribe(res => {
       console.log(res);
-    })
+    });
   }
   ngOnInit() {
     this.getUser();
