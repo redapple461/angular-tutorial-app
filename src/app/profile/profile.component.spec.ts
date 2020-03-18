@@ -23,20 +23,23 @@ import { RegistrationComponent } from '../registration/registration.component';
 import { HeroService } from '../services/hero.service';
 import { MessageService } from '../services/message.service';
 import { MatCardModule } from '@angular/material/card';
+import { APP_BASE_HREF } from '@angular/common';
+//import { UserService } from '../services/user.service';
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
   let fixture: ComponentFixture<ProfileComponent>;
+ // let UserService: UserService;
 
   beforeEach(async(() => {
       localStorage.setItem('userData', JSON.stringify(
         {
           user:{
-            _id: 'testid',
-            name: 'Test',
-            surname: 'TestSurname',
-            email: 'test@mail.ru',
-            phone: 'testphone'
+            _id: '5e5e5a0b0675fd47b0843e5c',
+            name: 'Dima',
+            surname: 'Balakishyieu',
+            email: 'dima.balakishiev.99@mail.ru',
+            phone: '375292309343'
           }
         }
       ))
@@ -64,13 +67,14 @@ describe('ProfileComponent', () => {
             RegistrationComponent,
             ProfileComponent
           ],
-        providers: [ HeroService, MessageService ]
+        providers: [{provide: APP_BASE_HREF, useValue : '/' }, HeroService, MessageService]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ProfileComponent);
+    // UserService = fixture.debugElement.injector.get(UserService);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -78,4 +82,19 @@ describe('ProfileComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should save', () => {
+    component.user = {
+      _id: '5e5e5a0b0675fd47b0843e5c',
+      name: 'Dima',
+      surname: 'Balakishyieu',
+      email: 'dima.balakishiev.99@mail.ru',
+      password: '1234567'
+    }
+    component.save();
+  });
+
+  it('should goBack', () => {
+    component.goBack();
+  })
 });

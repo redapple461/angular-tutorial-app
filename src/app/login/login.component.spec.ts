@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { LoginComponent } from './login.component';
 import {MatCardModule} from '@angular/material/card';
@@ -23,10 +23,15 @@ import { RegistrationComponent } from '../registration/registration.component';
 import { ProfileComponent } from '../profile/profile.component';
 import { HeroService } from '../services/hero.service';
 import { MessageService } from '../services/message.service';
+import { AuthService } from '../services/auth.service';
+import { of } from 'rxjs';
+import { ResponseInterface } from '../models/response.model';
+import { APP_BASE_HREF } from '@angular/common';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
+  let authService: AuthService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -53,7 +58,7 @@ describe('LoginComponent', () => {
           RegistrationComponent,
           ProfileComponent
         ],
-      providers: [ HeroService, MessageService ]
+      providers: [{provide: APP_BASE_HREF, useValue : '/' }, HeroService, MessageService, AuthService ]
   })
   .compileComponents();
   }));
@@ -61,10 +66,25 @@ describe('LoginComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
+    authService = fixture.debugElement.injector.get(AuthService);
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should regForm', () => {
+    component.regForm();
+  });
+
+  it('should sign in by defualt user', () => {
+    component.email = 'dima.balakishiev.99@mail.ru';
+    component.password = '12345678';
+    // const spy: jasmine.Spy = spyOn(authService, 'signIn');
+    component.signIn();
+    expect(component.email).toBe('dima.balakishiev.99@mail.ru');
+  });
+ 
 });
+

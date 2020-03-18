@@ -22,6 +22,7 @@ import { RegistrationComponent } from './registration/registration.component';
 import { ProfileComponent } from './profile/profile.component';
 import { SendEmailComponent } from './send-email/send-email.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { RefreshTokenComponent } from './refresh-token/refresh-token.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     RegistrationComponent,
     ProfileComponent,
     SendEmailComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    RefreshTokenComponent
   ],
   imports: [
     MatRadioModule,

@@ -7,12 +7,12 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit {
-  private email: string;
-  private name: string;
-  private surname: string;
-  private phone: string;
-  private password: string;
-  constructor(private authSerivce: AuthService) { }
+  public email: string;
+  public name: string;
+  public surname: string;
+  public phone: string;
+  public password: string;
+  constructor(public authSerivce: AuthService) { }
 
   ngOnInit() {
   }
@@ -20,14 +20,10 @@ export class RegistrationComponent implements OnInit {
   register() {
     this.authSerivce.register(this.email, this.name, this.surname, this.phone, this.password).subscribe((res: any) => {
       if (res.error) {
-        alert(res.error.message);
+        alert(res.error);
       }
       alert(res.message);
     });
-  }
-
-  back() {
-    console.log('back');
   }
 
 }

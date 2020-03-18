@@ -27,6 +27,7 @@ import { LoginComponent } from '../login/login.component';
 import { ChangePasswordComponent } from '../change-password/change-password.component';
 import { RegistrationComponent } from '../registration/registration.component';
 import { ProfileComponent } from '../profile/profile.component';
+import { APP_BASE_HREF } from '@angular/common';
 
 describe('HeroesComponent', () => {
     let component: HeroesComponent;
@@ -36,7 +37,7 @@ describe('HeroesComponent', () => {
     let rootElement: HTMLElement;
 
     beforeEach(async(() => {
-        localStorage.setItem('userData',JSON.stringify('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZTVlNWEwYjA2NzVmZDQ3YjA4NDNlNWMiLCJpYXQiOjE1ODMzMTcxMzl9.USRfyGBxF61mq7yiG5u7UxiIrYsGJbSc9bHgp8iQWrQ'));
+        localStorage.setItem('userData',JSON.stringify({token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZTVlNWEwYjA2NzVmZDQ3YjA4NDNlNWMiLCJpYXQiOjE1ODMzMTcxMzl9.USRfyGBxF61mq7yiG5u7UxiIrYsGJbSc9bHgp8iQWrQ'}));
         TestBed.configureTestingModule({
           imports: [    MatRadioModule,
               MatButtonModule,
@@ -61,7 +62,7 @@ describe('HeroesComponent', () => {
               RegistrationComponent,
               ProfileComponent
             ],
-          providers: [ HeroService, MessageService ]
+          providers: [{provide: APP_BASE_HREF, useValue : '/' }, HeroService, MessageService ]
       })
       .compileComponents();
     }));
@@ -70,7 +71,7 @@ describe('HeroesComponent', () => {
         fixture = TestBed.createComponent(HeroesComponent);
         component = fixture.componentInstance;
         heroService = fixture.debugElement.injector.get(HeroService);
-        mockHero = {id: 99 , name: 'Mock', universe: 'MochUn'};
+        mockHero = {id: 99 , name: 'Mock', universe: 'Marvel'};
         fixture.detectChanges();
         rootElement = fixture.nativeElement;
     });
@@ -106,7 +107,7 @@ describe('HeroesComponent', () => {
 
     it('should call hero service on add', () => {
         const spy: jasmine.Spy = spyOn(heroService, 'addHero').and.returnValue(of(component.selectedHero));
-        component.add('Test');
+        component.add('HeroesComponent');
         expect(spy).toHaveBeenCalled();
     });
 
@@ -114,19 +115,19 @@ describe('HeroesComponent', () => {
     it('should call hero service on delete', () => {
         const spy: jasmine.Spy = spyOn(heroService, 'deleteHero').and.returnValue(of(component.selectedHero));
         component.heroes = [];
-        component.delete({name: 'Test', universe: 'Marvel'});
+        component.delete({name: 'HeroesComponent', universe: 'Marvel'});
         expect(spy).toHaveBeenCalled();
     });
 
     it('should filter array on delete', () => {
-        component.heroes = [{id: 0, name: 'Test', universe: 'Marvel'} , { id: 0, name: 'Test1', universe: 'Marvel'}];
-        component.delete({id: 0, name: 'Test', universe: 'Marvel'});
+        component.heroes = [{id: 0, name: 'HeroesComponent', universe: 'Marvel'} , { id: 0, name: 'HeroesComponent1', universe: 'Marvel'}];
+        component.delete({id: 0, name: 'HeroesComponent', universe: 'Marvel'});
         expect(component.heroes.length).toBe(1);
     });
 
     it('should change selected hero', () => {
-        const mockHero = {id: 1, name: 'Mock', universe: 'Marvel'};
-        component.selectedHero = {id: 0, name: 'Test', universe: 'Marvel'};
+        const mockHero = {id: 1, name: 'HeroesComponent', universe: 'Marvel'};
+        component.selectedHero = {id: 0, name: 'HeroesComponent1', universe: 'Marvel'};
         component.onSelect(mockHero);
         expect(component.selectedHero).toEqual(mockHero);
     });

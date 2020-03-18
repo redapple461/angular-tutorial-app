@@ -27,7 +27,7 @@ export class ChangePasswordComponent implements OnInit {
           return alert('Min length is 7');
         } else {
           const hashPassword = await bcrytp.hash(this.firstPassword, 5);
-          return  this.authService.changePassword(hashPassword, this.route.snapshot.paramMap.get('token')).subscribe(res => {
+          this.authService.changePassword(hashPassword, this.route.snapshot.paramMap.get('token')).subscribe(res => {
             if (res.error) {
               return alert(res.error);
             }

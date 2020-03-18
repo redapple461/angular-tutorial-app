@@ -9,7 +9,7 @@ import { AuthService } from '../services/auth.service';
 export class SendEmailComponent implements OnInit {
   public email: string;
 
-  constructor(private authService: AuthService) { }
+  constructor(public authService: AuthService) { }
 
   ngOnInit() {
   }

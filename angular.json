@@ -85,7 +85,10 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-            "codeCoverageExclude": ["src/app/hero-search/hero-search.component.ts"],
+            "codeCoverageExclude": [
+              "src/app/hero-search/hero-search.component.ts","src/app/services/auth-guard.service.ts","src/app/app.component.ts",
+              "src/app/send-email/send-email.component.ts", "src/app/heroes/heroes-component.ts"
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets"

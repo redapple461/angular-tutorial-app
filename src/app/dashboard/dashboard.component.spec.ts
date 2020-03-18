@@ -24,6 +24,7 @@ import { LoginComponent } from '../login/login.component';
 import { ChangePasswordComponent } from '../change-password/change-password.component';
 import { RegistrationComponent } from '../registration/registration.component';
 import { ProfileComponent } from '../profile/profile.component';
+import { APP_BASE_HREF } from '@angular/common';
 
 
 describe('DashBoard', () => {
@@ -65,7 +66,7 @@ describe('DashBoard', () => {
                 RegistrationComponent,
                 ProfileComponent
               ],
-            providers: [ HeroService, MessageService ]
+            providers: [ {provide: APP_BASE_HREF, useValue : '/' }, HeroService, MessageService ]
         })
         .compileComponents();
     });
@@ -110,8 +111,6 @@ describe('DashBoard', () => {
         component.getHeroes();
         expect(spyOn(heroService, 'getHeroes').and.callThrough()).toBeTruthy();
     });
-
-
 
 
 

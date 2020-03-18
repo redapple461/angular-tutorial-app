@@ -23,10 +23,16 @@ import { ProfileComponent } from '../profile/profile.component';
 import { HeroService } from '../services/hero.service';
 import { MessageService } from '../services/message.service';
 import {MatCardModule} from '@angular/material/card';
+import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+import { ResponseInterface } from '../models/response.model';
+import { of } from 'rxjs';
+import { APP_BASE_HREF } from '@angular/common';
 
 describe('ChangePasswordComponent', () => {
   let component: ChangePasswordComponent;
   let fixture: ComponentFixture<ChangePasswordComponent>;
+  let authService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -53,7 +59,16 @@ describe('ChangePasswordComponent', () => {
           RegistrationComponent,
           ProfileComponent
         ],
-      providers: [ HeroService, MessageService ]
+      providers: [ {provide: APP_BASE_HREF, useValue : '/' }, HeroService, MessageService, AuthService, {
+        provide: ActivatedRoute,
+        useValue: {
+          snapshot: {
+            paramMap: {
+              get: () => 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZTVlNWEwYjA2NzVmZDQ3YjA4NDNlNWMiLCJpYXQiOjE1ODMzMTcxMzl9.USRfyGBxF61mq7yiG5u7UxiIrYsGJbSc9bHgp8iQWrQ', // represents the bookId
+            },
+          },
+        },
+      },]
   })
   .compileComponents();
   }));
@@ -61,10 +76,53 @@ describe('ChangePasswordComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ChangePasswordComponent);
     component = fixture.componentInstance;
+    authService = fixture.debugElement.injector.get(AuthService);
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should return password is missing when fistPassword = "" ', (done) => {
+    spyOn(window, 'alert');
+    component.send();
+    expect(window.alert).toHaveBeenCalledWith('Password is missing');
+    done();
+  });
+
+  it('should return password is missing when confirmPassword = "" ', (done) => {
+    spyOn(window, 'alert');
+    component.firstPassword = '1';
+    component.send();
+    expect(window.alert).toHaveBeenCalledWith('Password is missing');
+    done();
+  });
+
+  it('should return password are not equal when firstPassword != confirmPassword ', (done) => {
+    spyOn(window, 'alert');
+    component.firstPassword = '1';
+    component.confirmPassword = '2';
+    component.send();
+    expect(window.alert).toHaveBeenCalledWith('Password are not equal');
+    done();
+  });
+
+  it('should return Min length is 7 when firstPassword.length < 7 ', (done) => {
+    spyOn(window, 'alert');
+    component.firstPassword = '123456';
+    component.confirmPassword = '123456';
+    component.send();
+    expect(window.alert).toHaveBeenCalledWith('Min length is 7');
+    done();
+  });
+
+  it('should return Check email when all is right', (done) => {
+    const spy: jasmine.Spy = spyOn(authService, 'changePassword').and.returnValue(of(ResponseInterface));
+    component.firstPassword = '12345678';
+    component.confirmPassword = '12345678';
+    component.send();
+    expect(spy).not.toHaveBeenCalled();
+    done();
   });
 });

@@ -9,7 +9,7 @@ import { catchError, map, tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class HeroService {
-  private token: string = JSON.parse(localStorage.getItem('userData')).token;
+  private token: string = JSON.parse(localStorage.getItem('userData')).authToken;
   private heroesUrl = 'http://localhost:4000/';
   share: EventEmitter<string> = new EventEmitter();
   private universe = '';
@@ -56,7 +56,7 @@ export class HeroService {
   }
   // add hero ( http - post)
   addHero(hero: Hero): Observable<Hero> {
-    console.log('add hero ' + hero.name);
+    console.log(this.token);
     return this.http.post<Hero>(this.heroesUrl + 'addHero', hero, this.httpOptions).pipe(
       tap((newHero: Hero) => this.log(`added hero w/ id=${newHero.id}`)),
       catchError(this.handleError<Hero>('addHero'))
@@ -103,7 +103,9 @@ export class HeroService {
 
   // method to handle errors
   public handleError<T>(operation: string, result?: T) {
+
     return (error: any): Observable<T> => {
+      console.log(operation+ '       ' + result+ ' '+ error);
       this.log(`${operation} failed: ${error.message}`);
       // app should still running so returning empty arr
       return of(result as T);

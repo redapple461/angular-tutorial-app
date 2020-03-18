@@ -9,8 +9,8 @@ import { Location } from '@angular/common';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  private user: User;
-  private userId = JSON.parse(localStorage.getItem('userData')).user._id;
+  public user: User;
+  public userId = JSON.parse(localStorage.getItem('userData')).user._id;
   constructor(private userService: UserService, private location: Location) {
 
   }

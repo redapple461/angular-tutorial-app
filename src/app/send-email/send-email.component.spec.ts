@@ -23,11 +23,13 @@ import { ProfileComponent } from '../profile/profile.component';
 import { HeroService } from '../services/hero.service';
 import { MessageService } from '../services/message.service';
 import { MatCardModule } from '@angular/material/card';
+import { AuthService } from '../services/auth.service';
+import { APP_BASE_HREF } from '@angular/common';
 
 describe('SendEmailComponent', () => {
   let component: SendEmailComponent;
   let fixture: ComponentFixture<SendEmailComponent>;
-
+  let authService: AuthService;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [    MatRadioModule,
@@ -53,13 +55,14 @@ describe('SendEmailComponent', () => {
           RegistrationComponent,
           ProfileComponent
         ],
-      providers: [ HeroService, MessageService ]
+      providers: [{provide: APP_BASE_HREF, useValue : '/' }, HeroService, MessageService, AuthService ]
   })
   .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SendEmailComponent);
+    authService = fixture.debugElement.injector.get(AuthService);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -67,4 +70,13 @@ describe('SendEmailComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should send email', () => {
+    //const spy = spyOn(authService , 'sendEmail');
+    component.email = 'dima.balakishiev.99@mail.ru';
+    component.send();
+    expect(component.email).toBe('dima.balakishiev.99@mail.ru');
+  });
+
+
 });

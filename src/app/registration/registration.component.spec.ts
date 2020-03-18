@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { RegistrationComponent } from './registration.component';
 import { MatRadioModule } from '@angular/material/radio';
@@ -23,10 +23,13 @@ import { ProfileComponent } from '../profile/profile.component';
 import { HeroService } from '../services/hero.service';
 import { MessageService } from '../services/message.service';
 import { MatCardModule } from '@angular/material/card';
+import { AuthService } from '../services/auth.service';
+import { APP_BASE_HREF } from '@angular/common';
 
 describe('RegistrationComponent', () => {
   let component: RegistrationComponent;
   let fixture: ComponentFixture<RegistrationComponent>;
+  let authService: AuthService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -53,13 +56,14 @@ describe('RegistrationComponent', () => {
           RegistrationComponent,
           ProfileComponent
         ],
-      providers: [ HeroService, MessageService ]
+      providers: [{provide: APP_BASE_HREF, useValue : '/' }, HeroService, MessageService, AuthService ]
   })
   .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(RegistrationComponent);
+    authService = fixture.debugElement.injector.get(AuthService);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -67,4 +71,26 @@ describe('RegistrationComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should register user ', async () => {
+      //const spy: jasmine.Spy = spyOn(window, 'alert');
+      component.email = 'test@mail.ru';
+      component.name = 'MockName';
+      component.surname = 'MockSurname';
+      component.password = 'mockpass';
+      component.phone = '375292309343';
+      component.register();
+      expect(true).toBeTruthy();
+  });
+
+  it('should error on register on wrong password ', async () => {
+    //const spy: jasmine.Spy = spyOn(window, 'alert');
+    component.email = 'test@mail.ru';
+    component.name = 'MockName';
+    component.surname = 'MockSurname';
+    component.password = 'mo';
+    component.phone = '375292309343';
+    component.register();
+    expect(true).toBeTruthy();
+});
 });

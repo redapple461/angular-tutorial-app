@@ -22,6 +22,7 @@ import { LoginComponent } from '../login/login.component';
 import { ChangePasswordComponent } from '../change-password/change-password.component';
 import { RegistrationComponent } from '../registration/registration.component';
 import { ProfileComponent } from '../profile/profile.component';
+import { APP_BASE_HREF } from '@angular/common';
 
 
 describe('Message component', () => {
@@ -53,7 +54,7 @@ describe('Message component', () => {
             RegistrationComponent,
             ProfileComponent
           ],
-        providers: [ HeroService, MessageService ]
+        providers: [{provide: APP_BASE_HREF, useValue : '/' }, HeroService, MessageService ]
     })
     .compileComponents();
     }));
