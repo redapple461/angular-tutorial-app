@@ -40,7 +40,12 @@ export class HeroService {
   // get all heroes from server
   getHeroes(): Observable<Hero[]> {
     this.messageService.add('HeroService: fetched heroes');
-    return this.http.get<Hero[]>(this.heroesUrl + 'getHeroes', this.httpOptions)
+    return this.http.get<Hero[]>(this.heroesUrl + 'getHeroes', {
+      headers: new HttpHeaders({
+         'Content-Type': 'application/json',
+         authorization: JSON.parse(localStorage.getItem('userData')).authToken
+        })
+    })
       .pipe(
         catchError(this.handleError<Hero[]>('getHeroes', []))
       );
@@ -49,7 +54,12 @@ export class HeroService {
   getHero(name: string): Observable<Hero> {
     this.messageService.add(`HeroService: fetched hero name=${name}`);
     const url = `${this.heroesUrl}getHero/${name}`;
-    return this.http.get<Hero>(url, this.httpOptions).pipe(
+    return this.http.get<Hero>(url, {
+      headers: new HttpHeaders({
+         'Content-Type': 'application/json',
+         authorization: JSON.parse(localStorage.getItem('userData')).authToken
+        })
+    }).pipe(
        tap(() => this.log(`fetched hero id=${name}`)),
          catchError(this.handleError<Hero>(`getHero name=${name}`))
      );
@@ -57,7 +67,12 @@ export class HeroService {
   // add hero ( http - post)
   addHero(hero: Hero): Observable<Hero> {
     console.log(this.token);
-    return this.http.post<Hero>(this.heroesUrl + 'addHero', hero, this.httpOptions).pipe(
+    return this.http.post<Hero>(this.heroesUrl + 'addHero', hero,{
+      headers: new HttpHeaders({
+         'Content-Type': 'application/json',
+         authorization: JSON.parse(localStorage.getItem('userData')).authToken
+        })
+    }).pipe(
       tap((newHero: Hero) => this.log(`added hero w/ id=${newHero.id}`)),
       catchError(this.handleError<Hero>('addHero'))
     );
@@ -75,14 +90,24 @@ export class HeroService {
 
   // update hero (http - put)
   updateHero(hero: Hero, oldName: string): Observable<any> {
-    return this.http.put(`${this.heroesUrl}updateHero/${oldName}`, hero, this.httpOptions).pipe(
+    return this.http.put(`${this.heroesUrl}updateHero/${oldName}`, hero, {
+      headers: new HttpHeaders({
+         'Content-Type': 'application/json',
+         authorization: JSON.parse(localStorage.getItem('userData')).authToken
+        })
+    }).pipe(
       tap(() => this.log(`updated hero id=${hero.id}`)),
       catchError(this.handleError<Hero>('updateHero'))
     );
   }
 
   getTotalCount(): Observable<any> {
-    return this.http.get(`${this.heroesUrl}getTotalCount`, this.httpOptions);
+    return this.http.get(`${this.heroesUrl}getTotalCount`,{
+      headers: new HttpHeaders({
+         'Content-Type': 'application/json',
+         authorization: JSON.parse(localStorage.getItem('userData')).authToken
+        })
+    });
   }
 
   // seach heroes by name
@@ -91,7 +116,12 @@ export class HeroService {
     if (!term.trim()) {
       return of([]);
     }
-    return this.http.get<Hero[]>(`${this.heroesUrl}getHero/${term}`, this.httpOptions).pipe(
+    return this.http.get<Hero[]>(`${this.heroesUrl}getHero/${term}`, {
+      headers: new HttpHeaders({
+         'Content-Type': 'application/json',
+         authorization: JSON.parse(localStorage.getItem('userData')).authToken
+        })
+    }).pipe(
       tap(() => this.log(`found heroes matching "${term}"`)),
       catchError(this.handleError<Hero[]>('searchHeroes', []))
     );

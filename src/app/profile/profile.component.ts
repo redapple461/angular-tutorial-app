@@ -30,6 +30,7 @@ export class ProfileComponent implements OnInit {
 
   private getUser() {
     this.userService.getUser(this.userId).subscribe(res => {
+      console.log('work');
       this.user = res;
     });
   }

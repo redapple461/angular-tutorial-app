@@ -22,7 +22,7 @@ import { RegistrationComponent } from './registration/registration.component';
 import { ProfileComponent } from './profile/profile.component';
 import { SendEmailComponent } from './send-email/send-email.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
-import { RefreshTokenComponent } from './refresh-token/refresh-token.component';
+import { RefreshTokenService } from './services/refresh-token.service';
 
 @NgModule({
   declarations: [
@@ -37,8 +37,7 @@ import { RefreshTokenComponent } from './refresh-token/refresh-token.component';
     RegistrationComponent,
     ProfileComponent,
     SendEmailComponent,
-    ChangePasswordComponent,
-    RefreshTokenComponent
+    ChangePasswordComponent
   ],
   imports: [
     MatRadioModule,
@@ -51,7 +50,7 @@ import { RefreshTokenComponent } from './refresh-token/refresh-token.component';
     HttpClientModule,
     MatCardModule
   ],
-  providers: [],
+  providers: [RefreshTokenService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

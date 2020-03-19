@@ -21,21 +21,27 @@ export class UserService {
   }
 
   getUser(id: string): Observable<User> {
-    return this.http.get<User>(`http://localhost:4000/user/getUser/${id}`, this.httpOptions).pipe(
+    console.log(`Id to get ${id}`);
+    return this.http.get<User>(`http://localhost:4000/user/getUser/5e6108e9c7f3d43d08ffbe8e`, { headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      authorization: JSON.parse(localStorage.getItem('userData')).authToken
+     })}).pipe(
       tap(() => this.log(`get user id=${id}`)),
-        catchError(this.handleError<User>(`getUser id=${id}`))
+      catchError(this.handleError<User>(`getUser id=${id}`))
     );
   }
 
   updateUser(id: string, newUser: User): Observable<User> {
-    console.log('ky')
-    return this.http.put<User>(`http://localhost:4000/user/updateUser/${id}`, newUser , this.httpOptions).pipe(
+    return this.http.put<User>(`http://localhost:4000/user/updateUser/${id}`, newUser , { headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      authorization: JSON.parse(localStorage.getItem('userData')).authToken
+     })}).pipe(
       tap(() => this.log(`update user id=${id}`)),
         catchError(this.handleError<User>(`updateUser id=${id}`))
     );
   }
   private log(message: string) {
-    this.messageService.add(`HeroService: ${message}`);
+    this.messageService.add(`UserService: ${message}`);
   }
 
    // method to handle errors
