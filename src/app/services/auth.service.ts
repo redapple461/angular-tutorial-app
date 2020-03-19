@@ -12,6 +12,7 @@ export class AuthService {
   constructor(public http: HttpClient) {}
   // ...
   public isAuthenticated(): boolean {
+    // console.log('isAuth?');
     const jwtHelper: JwtHelperService = new JwtHelperService();
     const token = JSON.parse(localStorage.getItem('userData')).authToken;
     const refToken = JSON.parse(localStorage.getItem('userData')).refToken;
@@ -22,6 +23,7 @@ export class AuthService {
   }
 
   public signIn(email: string, password: string): Observable<ResponseInterface> {
+    // console.log('singIn');
     return this.http.post<ResponseInterface>('http://localhost:4000/auth/login', {email, password});
   }
 

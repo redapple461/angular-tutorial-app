@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, retryWhen } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import {tap} from 'rxjs/operators';
 
@@ -18,7 +18,9 @@ export class RefreshTokenService implements HttpInterceptor {
         catchError(this.handleError<Hero[]>('getHeroes', []))
       );
     )*/
-    return next.handle(request).pipe(tap (() => {}), catchError(this.handleError<any>()));
+    return next.handle(request).pipe(
+      catchError(this.handleError<any>())
+    );
   }
 
   public handleError<T>() {
@@ -26,7 +28,9 @@ export class RefreshTokenService implements HttpInterceptor {
     return (error: any): Observable<T> => {
       if (error instanceof HttpErrorResponse) {
         if (error.status === 401) {
+          console.log('refreshing');
           this.authService.updateToken(this.refToken);
+          return;
         }
       }
       return;

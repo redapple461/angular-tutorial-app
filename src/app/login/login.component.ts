@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import {Location} from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,7 @@ import {Location} from '@angular/common';
 export class LoginComponent implements OnInit {
   public email: string;
   public password: string;
-  constructor(private authService: AuthService, private location: Location) {
+  constructor(private authService: AuthService, private location: Location, private router: Router) {
     this.email = '';
     this.password = '';
   }
@@ -26,7 +27,7 @@ export class LoginComponent implements OnInit {
     this.authService.signIn(this.email, this.password).subscribe((res: any) => {
       console.log(res);
       localStorage.setItem('userData', JSON.stringify(res));
-      this.location.go('/dashboard');
+      this.router.navigateByUrl('/dashboard');
     });
   }
 
