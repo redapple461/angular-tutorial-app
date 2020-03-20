@@ -51,7 +51,11 @@ import { RefreshTokenService } from './services/refresh-token.service';
     MatCardModule
   ],
   providers: [
-  
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: RefreshTokenService,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

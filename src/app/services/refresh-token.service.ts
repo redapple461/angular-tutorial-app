@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse } from '@angular/common/http';
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, retryWhen } from 'rxjs/operators';
 import { AuthService } from './auth.service';
@@ -9,7 +9,6 @@ import {tap} from 'rxjs/operators';
   providedIn: 'root'
 })
 export class RefreshTokenService implements HttpInterceptor {
-  refToken = JSON.parse(localStorage.getItem('userData')).refToken;
   constructor(private authService: AuthService) { }
   //  🔥🔥🔥 implements function 🔥🔥🔥
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -19,7 +18,20 @@ export class RefreshTokenService implements HttpInterceptor {
       );
     )*/
     return next.handle(request).pipe(
-      catchError(this.handleError<any>())
+      tap(event => {
+        console.log(event);
+        if (event instanceof HttpResponse) {
+          console.log('succeed');
+        }
+      }, error => {
+          console.log(error);
+          if (error.message === 'token expired') {
+            console.log('refreshing');
+            this.authService.updateToken(JSON.parse(localStorage.getItem('userData')).refToken);
+            const newReq = request.clone();
+            return next.handle(newReq);
+          }
+      })
     );
   }
 
@@ -29,7 +41,7 @@ export class RefreshTokenService implements HttpInterceptor {
       if (error instanceof HttpErrorResponse) {
         if (error.status === 401) {
           console.log('refreshing');
-          this.authService.updateToken(this.refToken);
+          this.authService.updateToken(JSON.parse(localStorage.getItem('userData')).refToken);
           return;
         }
       }
