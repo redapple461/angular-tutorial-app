@@ -19,7 +19,7 @@ export class AuthService {
     console.log(token);
     // Check whether the token is expired and return
     // true or false
-    return !jwtHelper.isTokenExpired(token);
+    return !!(token);
   }
 
   public signIn(email: string, password: string): Observable<ResponseInterface> {
@@ -44,12 +44,11 @@ export class AuthService {
     });
   }
 
-  public updateToken(refToken): Observable<ResponseInterface> {
-    return this.http.post<ResponseInterface>('http://localhost:4000/auth/refreshToken', {
-        headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-            authorization: refToken
-        })
-    });
+  public updateToken(): Observable<ResponseInterface> {
+    const htppOptions = new HttpHeaders({
+      'Content-Type': 'application/json',
+      authorization: JSON.parse(localStorage.getItem('userData')).authToken
+     })
+    return this.http.post<ResponseInterface>('http://localhost:4000/auth/refreshToken', htppOptions);
   }
 }

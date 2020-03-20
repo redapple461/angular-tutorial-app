@@ -25,27 +25,18 @@ export class RefreshTokenService implements HttpInterceptor {
         }
       }, error => {
           console.log(error);
-          if (error.message === 'token expired') {
+          if (error.status === 401) {
             console.log('refreshing');
-            this.authService.updateToken(JSON.parse(localStorage.getItem('userData')).refToken);
-            const newReq = request.clone();
-            return next.handle(newReq);
+            this.authService.updateToken().subscribe( res => {
+              const newStorage = JSON.parse(localStorage.getItem('userData'));
+              newStorage.authToken = res;
+              localStorage.setItem('userData', JSON.stringify(newStorage));
+              const newReq = request.clone();
+              return next.handle(newReq);
+            });
           }
       })
     );
   }
 
-  public handleError<T>() {
-
-    return (error: any): Observable<T> => {
-      if (error instanceof HttpErrorResponse) {
-        if (error.status === 401) {
-          console.log('refreshing');
-          this.authService.updateToken(JSON.parse(localStorage.getItem('userData')).refToken);
-          return;
-        }
-      }
-      return;
-    };
-  }
 }
